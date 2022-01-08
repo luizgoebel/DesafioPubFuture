@@ -8,16 +8,25 @@ namespace PubFuture.Models
 {
     public class Receita : BaseModel
     {
-        [Required]
+        [Required(ErrorMessage = "Valor obrigatório.")]
         public double Valor { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Data obrigatório.")]
+        [Display(Name = "Data recebimento esperado")]
         public DateTime DataRecebimentoEsperado { get; set; }
+
+        [Display(Name = "Data recebimento")]
         public DateTime DataRecebimento { get; set; }
+
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
-        [Required(ErrorMessage = "Conta obrigátório.")]
-        [MaxLength(6, ErrorMessage = "Máximo de 6 dígitos"), MinLength(6, ErrorMessage = "Mínimo de 6 dígitos")]
-        public string Conta { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Tipo de receita obrigatório.")]
+        [Display(Name = "Tipo de receita")]
         public string TipoReceita { get; set; }
+
+
+        public int IdConta { get; set; }
+        public Conta Conta { get; set; }
     }
 }

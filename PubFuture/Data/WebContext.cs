@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PubFuture.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,10 @@ namespace PubFuture.Data
 {
     public class WebContext : DbContext
     {
+        public DbSet<Conta> Contas { get; set; }
+        public DbSet<Despesa> Despesas { get; set; }
+        public DbSet<Receita> Receitas { get; set; }
+
         public WebContext(DbContextOptions<WebContext> options) : base(options)
         {
         }

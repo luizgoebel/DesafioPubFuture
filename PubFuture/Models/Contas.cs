@@ -9,7 +9,6 @@ namespace PubFuture.Models
     public class Conta : BaseModel
     {
         [Required(ErrorMessage = "Saldo obrigatório.")]
-        [MinLength(0, ErrorMessage = "Saldo minímo é R$ 0,00")]
         public double Saldo { get; set; }
         [Required(ErrorMessage = "Tipo conta obrigatório.")]
         public string TipoConta { get; set; }

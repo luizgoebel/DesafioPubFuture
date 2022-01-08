@@ -2,21 +2,22 @@
 
 @using Newtonsoft.Json;
 
-@model PubFuture.Pages.Contas.IndexModel
+@model PubFuture.Pages.Despesas.IndexModel
 @{
-    ViewData["Title"] = "Contas";
+    ViewData["Title"] = "Despesas";
 }
 
 <body>
     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
         <div class="widget-content widget-content-area br-6">
+
             <div class="container">
                 <h3>
-                    Contas
+                    Despesas
                     <button class="btn btn-primary mb-2" style="color: #fff !important;background-color: #0078bc !important;border-color: #43c7ee;box-shadow: 0 10px 20px -10px #0078bc;position: relative;border-radius: 26px;float: right;" data-toggle="modal" data-target="#Cadastrar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path d="M10.6667 0H1.33333C0.593333 0 0 0.6 0 1.33333V10.6667C0 11.4 0.593333 12 1.33333 12H10.6667C11.4 12 12 11.4 12 10.6667V1.33333C12 0.6 11.4 0 10.6667 0ZM10.6667 10.6667H1.33333V1.33333H10.6667V10.6667ZM5.33333 9.33333H6.66667V6.66667H9.33333V5.33333H6.66667V2.66667H5.33333V5.33333H2.66667V6.66667H5.33333V9.33333Z" fill="white"></path>
-                        </svg> &nbsp; Nova Conta
+                        </svg> &nbsp; Nova Despesa
                     </button>
                 </h3>
             </div>
@@ -29,49 +30,59 @@
                                 #
                             </th>
                             <th>
-                                Saldo
+                                Valor
                             </th>
                             <th>
-                                Tipo de Conta
+                                Data Pagamento
                             </th>
                             <th>
-                                instituição
+                                Data Pagamento Esperado
+                            </th>
+                            <th>
+                                Tipo Despesa
+                            </th>
+                            <th>
+                                Conta
                             </th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Contas)
+                        @foreach (var item in Model.Despesas)
                         {
                             <tr class="text-center">
                                 <td>
                                     @item.ID
                                 </td>
-                                <td>
-                                    @item.Saldo.ToString("C")
+                                <td style="color:red">
+                                    @item.Valor.ToString("C")
                                 </td>
                                 <td>
-                                    @item.TipoConta
+                                    @item.DataPagamento.ToShortDateString()
                                 </td>
                                 <td>
-                                    @item.InstituicaoFinanceira
+                                    @item.DataPagamentoEsperado.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.TipoDespesa
+                                </td>
+                                <td>
+                                    @item.Conta
                                 </td>
                                 <td>
                                     <a asp-page="./Editar" asp-route-id="@item.ID" class="btn btn-primary"> <i class="fas fa-edit"></i> </a> |
                                     <a asp-page="./Visualizar" asp-route-id="@item.ID" class="btn btn-info"> <i class="fas fa-search-plus"></i> </a> |
-                                    <a asp-page="./Deletar" asp-route-id="@item.ID" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> </a> |
-                                    <a asp-page="./Operar" asp-route-id="@item.ID" class="btn btn-success"> <i class="fas fa-file-invoice-dollar"></i> </a>
+                                    <a asp-page="./Deletar" asp-route-id="@item.ID" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> </a>
                                 </td>
                             </tr>
                         }
                         <tr>
-                            <td class="text-center">Saldo Total</td>
-                            <td class="text-center">R$ 0,00</td>
+                            <td class="text-center">Total Despesas</td>
+                            <td class="text-center" style="color:red">R$ 0,00</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <h7>*Só é permitido apenas 3 tipos de contas.</h7>
         </div>
     </div>
 </body>

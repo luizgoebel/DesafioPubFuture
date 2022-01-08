@@ -1,0 +1,181 @@
+﻿.list1 ul {
+    overflow: hidden;
+}
+
+.list1 li {
+    float: left;
+}
+
+.w-value {
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.font-6 {
+    font-size: 7px;
+}
+
+.quotation-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #406790;
+}
+
+.quotation-info {
+    font-size: 12px;
+    color: #7C7C7C;
+}
+
+    .quotation-info span {
+        font-weight: 700;
+        color: #406790;
+    }
+
+.quotation-variation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
+}
+
+.bloco {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    min-height: 160px !important;
+}
+
+    .bloco:hover {
+        transition: all 0.3s ease-out !important;
+        -webkit-transition: all 0.3s ease-out !important;
+        -webkit-transform: translateY(-3px) !important;
+        transform: translateY(-3px) !important;
+    }
+
+.widget-one_hybrid .widget-heading h5 {
+    margin-bottom: 0;
+    font-size: 10px;
+    /*color: #ffffff;*/
+}
+
+.day {
+    font-size: 12px;
+    color: #7C7C7C;
+    font-weight: 400 !important;
+}
+
+.cotacao_atual {
+    white-space: nowrap;
+    font-size: 18px !important;
+    font-weight: 700;
+    color: #406790;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radius {
+    border-radius: 15px !important;
+}
+
+.t-rate.rate-dec {
+    color: #A50C0C;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.t-rate.rate-inc {
+    color: #1EBE85;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.t-rate {
+    padding-right: 5px;
+    padding-left: 5px;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 13px;
+    letter-spacing: 0px;
+}
+
+.widget-one_hybrid .widget-heading {
+    min-height: 160px;
+}
+
+.nav-tabs .nav-link:hover {
+}
+
+/*trading view styles*/
+
+.ticker-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.ticker-canvas {
+    width: calc((200px * 15) + 2px);
+    /*
+        200px = minimum width of ticker item before widget script starts removing ticker codes
+        15 = number of ticker codes
+        2px = accounts for 1px external border
+        */
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-name: ticker-canvas;
+    animation-name: ticker-canvas;
+    -webkit-animation-duration: 20s;
+    animation-duration: 40s;
+}
+
+    .ticker-canvas:hover {
+        animation-play-state: paused
+    }
+
+@-webkit-keyframes ticker-canvas {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes ticker-canvas {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.tradingview-widget-container {
+    position: relative;
+}
+
+    .tradingview-widget-container iframe {
+        position: absolute;
+        top: 0;
+    }
+
+        .tradingview-widget-container iframe:nth-of-type(2) {
+            left: 100%;
+        }
+
+.widget-one_hybrid .widget-heading svg {
+    height: 13px;
+    width: 7px;
+}

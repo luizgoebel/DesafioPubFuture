@@ -1,0 +1,194 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16,4px;
+    color: #7C7C7C;
+    align-items: center;
+}
+
+.btn-New {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16,41px;
+    letter-spacing: 8%;
+    color: #C9D1D8 !important;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #406790;
+    border-radius: 7px;
+    height: 30px;
+    width: 90px;
+}
+
+.btn-Edit {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16,41px;
+    letter-spacing: 8%;
+    color: #C9D1D8 !important;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #406790;
+    border-radius: 7px;
+    width: 90px;
+    height: 30px;
+}
+
+.btn-Delete {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16,41px;
+    letter-spacing: 8%;
+    color: #C9D1D8 !important;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #A50C0C;
+    border-radius: 7px;
+    width: 90px;
+    height: 30px;
+}
+
+.btn-Save {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16,41px;
+    letter-spacing: 8%;
+    color: #C9D1D8 !important;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #406790;
+    border-radius: 7px;
+    width: 90px;
+    height: 30px;
+}
+
+.btn-Manter {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16,41px;
+    letter-spacing: 8%;
+    color: #406790 !important;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #F1F2F3 !important;
+    border-radius: 7px;
+    width: 90px;
+    height: 30px;
+}
+
+.label-title {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 21,09px;
+    letter-spacing: 2%;
+    align-items: center;
+    color: #406790;
+}
+
+.label-input {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 11px;
+    line-height: 12,89px;
+    letter-spacing: 8%;
+    color: #7C7C7C;
+}
+.txt-Input {
+    font-family: 'Roboto', sans-serif !important;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.08em;
+    color: #7C7C7C;
+}
+
+.table-tr {
+    font-family: 'Roboto', sans-serif !important;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    align-items: center;
+    letter-spacing: 2%;
+    color: #406790 !important;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+}

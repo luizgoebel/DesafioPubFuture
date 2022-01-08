@@ -1,0 +1,148 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+
+<head>
+    <link href="~/Cork/demo3/assets/css/elements/infobox.css" rel="stylesheet" />
+    <link href="~/Cork/demo3/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .infobox-2 {
+            border-color: #434651;
+            background: #1e222d;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #25d5e4 !important;
+        }
+
+        .btn-active {
+            background: #406790;
+            border: #406790;
+            height: 28px;
+            font-size: 14px;
+            color: white;
+            border-radius: 7px;
+        }
+
+        .btn-off {
+            background: none;
+            height: 28px;
+            border: 1px solid #406790;
+            border-radius: 7px;
+            color: #406790;
+        }
+
+        .nav-pills .nav-link {
+            margin-top: 5px;
+        }
+
+            .nav-pills .nav-link.active {
+                background-color: #416890;
+            }
+
+        .infobox-2 {
+            width: 98%;
+            -webkit-box-shadow: none !important;
+            box-shadow: !important;
+        }
+
+        span.status {
+            font-size: 8px;
+            padding-top: 5px;
+        }
+
+        .tv-embed-widget-wrapper__body {
+            background-color: white !important;
+        }
+
+        .nowrap {
+            white-space: nowrap !important;
+            padding: 0px !important;
+        }
+
+        .effect-hover {
+            transition: all 0.3s ease-out;
+            -webkit-transition: all 0.3s ease-out;
+        }
+
+            .effect-hover:hover {
+                -webkit-transform: translateY(-3px) !important;
+                transform: translateY(-3) !important;
+                color: #afbdb6 !important;
+                cursor: pointer;
+            }
+
+        .nav-pills .nav-item {
+            padding: 5px;
+        }
+
+            .nav-pills .nav-item:not(:last-child) {
+                margin-right: 0px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 " style="padding-bottom: 10px;margin-top:0px !important;">
+                        <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
+                            <div class="widget-header">
+                                <h4 class="nowrap" style="line-height: 34px;">
+                                    Total Receita
+                                </h4>
+                            </div>
+                            <div class="widget-content" style=" padding-left: 50px">
+                                @*$ @Model.OpenVolume.ToMoneyString()*@
+                                <h4>R$ 0,00</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px;margin-top:0px !important;">
+                        <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
+                            <div class="widget-header ">
+                                <h4 class="nowrap" style="line-height: 34px;">
+                                    Total Despesas
+                                </h4>
+                            </div>
+                            <div class="widget-content  " style=" padding-left: 50px">
+                                @*$ @Model.ClosedVolume.ToMoneyString()*@
+                                <H4>R$ 0,00</H4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px;margin-top:0px !important;">
+                        <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
+                            <div class="widget-header ">
+                                <h4 class="nowrap" style="line-height: 34px;">
+                                    Em Conta
+                                </h4>
+                            </div>
+                            <div class="widget-content  " style=" padding-left: 50px">
+                                @*$ @Model.ClosedVolume.ToMoneyString()*@
+                                <H4>R$ 100,00</H4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@section scripts{
+    <script src="~/Cork/demo3/plugins/apex/apexcharts.min.js"></script>
+    <script src="~/js/CliDashBoard.js"></script>
+
+}

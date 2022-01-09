@@ -39,8 +39,8 @@
                                 Data Receb. Esperado
                             </th>
                             @*<th>
-                                Descrição
-                            </th>*@
+                                    Descrição
+                                </th>*@
                             <th>
                                 Conta
                             </th>
@@ -89,3 +89,58 @@
         </div>
     </div>
 </body>
+
+
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Cadastrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Cadastrar nova receita</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Cadastrar" id="frmCad">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Receita.Valor"></label>
+                            <input asp-for="Receita.Valor" class="form-control" placeholder="Digite o valor" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Receita.DataRecebimento"></label>
+                            <input type="date" asp-for="Receita.DataRecebimento" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Receita.DataRecebimentoEsperado"></label>
+                            <input type="date" asp-for="Receita.DataRecebimentoEsperado" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Receita.Descricao"></label>
+                            <input asp-for="Receita.Descricao" class="form-control" placeholder="Digite a descrição">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Receita.Conta"></label>
+                            <input asp-for="Receita.Conta" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Receita.TipoReceita"></label>
+                            <select asp-for="Receita.TipoReceita" class="form-control" required>
+                                <option value="Sálario">Sálario</option>
+                                <option value="" hidden selected>Selecionar</option>
+                                <option value="Sálario">Presente</option>
+                                <option value="Prêmio">Prêmio</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="this.disabled = true; frmCad.submit();" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                @*<button type="button" class="btn btn-danger">Fechar</button>*@
+            </div>
+        </div>
+    </div>
+</div>

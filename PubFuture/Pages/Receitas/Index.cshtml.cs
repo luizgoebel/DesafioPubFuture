@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PubFuture.BLL.ReceitaBLL;
 using PubFuture.Data;
 using PubFuture.Models;
 
@@ -20,21 +20,28 @@ namespace PubFuture.Pages.Receitas
             _context = context;
         }
 
+
+
         [BindProperty]
         public Receita Receita { get; set; }
+        public double TotalReceita { get; set; }
 
         public List<Receita> Receitas { get; set; }
 
+        [BindProperty]
+        public int IdReceita { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
+            double total = _context.Receitas.Sum(c => c.Valor);
+            TotalReceita = total;
             await CarregarPropriedades();
             return Page();
         }
 
+        
         public async Task<IActionResult> OnPostCadastrarAsync()
         {
-            Receita.Create = DateTime.Now;
-            Receita.Change = DateTime.Now;
             if (ModelState.IsValid)
             {
                 await _context.Receitas.AddAsync(Receita);
@@ -46,6 +53,36 @@ namespace PubFuture.Pages.Receitas
             {
                 return NotFound();
             }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostEditarAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Attach(Receita).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../Receitas/Index");
+            }
+
+            if (!ReceitaExiste(Receita.ID))
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeletarAsync()
+        {
+
+            Receita receita = await _context.Receitas.FirstOrDefaultAsync(c => c.ID == IdReceita);
+            if (receita != null)
+            {
+                _context.Remove(receita);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../Receitas/Index");
+            }
+
             return Page();
         }
 

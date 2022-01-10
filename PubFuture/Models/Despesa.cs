@@ -11,11 +11,14 @@ namespace PubFuture.Models
         [Required(ErrorMessage = "Valor obrigatório.")]
         public double Valor { get; set; }
 
-        [Required(ErrorMessage = "Data obrigatório.")]
+        [Required(ErrorMessage = "Data pagemnto esperado obrigatório.")]
         [Display(Name = "Data pagamento esperado")]
+        [DataType(DataType.Date)]
         public DateTime DataPagamentoEsperado { get; set; }
 
+        [Required(ErrorMessage = "Data pagamento obrigatório.")]
         [Display(Name = "Data do pagamento")]
+        [DataType(DataType.Date)]
         public DateTime DataPagamento { get; set; }
 
         [Required(ErrorMessage = "Tipo despesa obrigátório.")]

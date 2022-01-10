@@ -12,14 +12,5 @@ namespace PubFuture.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        public DateTime? Create { get; set; }
-        public DateTime? Change { get; set; }
-
-        public BaseModel()
-        {
-            if (!Create.HasValue)
-                Create = DateTime.Now;
-            Change = DateTime.Now;
-        }
     }
 }

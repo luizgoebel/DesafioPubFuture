@@ -98,12 +98,11 @@
                         <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
                             <div class="widget-header">
                                 <h4 class="nowrap" style="line-height: 34px;">
-                                    Total Receita
+                                    Total de Receita
                                 </h4>
                             </div>
-                            <div class="widget-content" style=" padding-left: 50px">
-                                @*$ @Model.OpenVolume.ToMoneyString()*@
-                                <h4>R$ 0,00</h4>
+                            <div class="widget-content text-center">
+                                <h4>@Model.TotalReceita.ToString("C")</h4>
                             </div>
                         </div>
                     </div>
@@ -112,12 +111,11 @@
                         <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
                             <div class="widget-header ">
                                 <h4 class="nowrap" style="line-height: 34px;">
-                                    Total Despesas
+                                    Total de Despesas
                                 </h4>
                             </div>
-                            <div class="widget-content  " style=" padding-left: 50px">
-                                @*$ @Model.ClosedVolume.ToMoneyString()*@
-                                <H4>R$ 0,00</H4>
+                            <div class="widget-content text-center">
+                                <h4>@Model.TotalDespesa.ToString("C")</h4>
                             </div>
                         </div>
                     </div>
@@ -126,12 +124,23 @@
                         <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
                             <div class="widget-header ">
                                 <h4 class="nowrap" style="line-height: 34px;">
-                                    Em Conta
+                                    Total em Conta
                                 </h4>
                             </div>
-                            <div class="widget-content  " style=" padding-left: 50px">
-                                @*$ @Model.ClosedVolume.ToMoneyString()*@
-                                <H4>R$ 100,00</H4>
+                            <div class="widget-content text-center">
+                                <h4 class="text-center">@Model.TotalConta.ToString("C")</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px;margin-top:0px !important;">
+                        <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
+                            <div class="widget-header ">
+                                <h4 class="nowrap" style="line-height: 34px;">
+                                    ACUMULADO TOTAL
+                                </h4>
+                            </div>
+                            <div class="widget-content text-center">
+                                <h4>@Model.AcumuladoTotal.ToString("C")</h4>
                             </div>
                         </div>
                     </div>
@@ -142,7 +151,5 @@
     </div>
 </body>
 @section scripts{
-    <script src="~/Cork/demo3/plugins/apex/apexcharts.min.js"></script>
-    <script src="~/js/CliDashBoard.js"></script>
 
 }

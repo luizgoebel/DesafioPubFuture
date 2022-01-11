@@ -30,20 +30,25 @@ namespace PubFuture.Pages.Receitas
 
         [BindProperty]
         public int IdReceita { get; set; }
+        public SelectList Contas { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
+            ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
+
             double total = _context.Receitas.Sum(c => c.Valor);
             TotalReceita = total;
+
             await CarregarPropriedades();
             return Page();
         }
 
-        
+
         public async Task<IActionResult> OnPostCadastrarAsync()
         {
             if (ModelState.IsValid)
             {
+                ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
                 await _context.Receitas.AddAsync(Receita);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Receitas/Index");

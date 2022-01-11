@@ -67,18 +67,21 @@
                                     @item.TipoDespesa
                                 </td>
                                 <td>
-                                    @item.Conta
+                                    @item.ContaID
                                 </td>
                                 <td>
-                                    <a asp-page="./Editar" asp-route-id="@item.ID" class="btn btn-primary"> <i class="fas fa-edit"></i> </a> |
-                                    <a asp-page="./Visualizar" asp-route-id="@item.ID" class="btn btn-info"> <i class="fas fa-search-plus"></i> </a> |
-                                    <a asp-page="./Deletar" asp-route-id="@item.ID" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> </a>
+                                    <btn class="btn btn-primary" onclick='editarDespesa(@Html.Raw(JsonConvert.SerializeObject(item)))' style="cursor: pointer;">
+                                        <i class="fas fa-edit"></i>
+                                    </btn> |
+                                    <btn class="btn btn-danger" onclick='deletarDespesa(@item.ID)' style="cursor: pointer;">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </btn>
                                 </td>
                             </tr>
                         }
                         <tr>
                             <td class="text-center">Total Despesas</td>
-                            <td class="text-center" style="color:red">R$ 0,00</td>
+                            <td class="text-center" style="color:red">@Model.TotalDespesa.ToString("C")</td>
                         </tr>
                     </tbody>
                 </table>
@@ -86,3 +89,148 @@
         </div>
     </div>
 </body>
+
+
+@*CADASTRAR*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Cadastrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Cadastrar nova despesa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Cadastrar" id="frmCad">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.Valor"></label>
+                            <input asp-for="Despesa.Valor" class="form-control" placeholder="Digite o valor" required>
+                            <span asp-validation-for="Despesa.Valor" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.DataPagamento"></label>
+                            <input type="date" asp-for="Despesa.DataPagamento" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.DataPagamentoEsperado"></label>
+                            <input type="date" asp-for="Despesa.DataPagamentoEsperado" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.TipoDespesa"></label>
+                            <select asp-for="Despesa.TipoDespesa" class="form-control" required>
+                                <option value="" hidden selected>Selecionar</option>
+                                <option value="Sálario">Sálario</option>
+                                <option value="Presente">Presente</option>
+                                <option value="Prêmio">Prêmio</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.Conta"></label>
+                            <select asp-for="Despesa.ContaID" class="form-control select2" asp-items="ViewBag.ContaID" required>
+                                <option selected hidden>Selecionar</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="this.disabled = true; frmCad.submit();" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*EDITAR*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Editar Despesa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Editar" id="frmEdit">
+                    <input asp-for="Despesa.ID" id="idEdit" class="form-control" readonly hidden>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.Valor"></label>
+                            <input asp-for="Despesa.Valor" id="valorEdit" class="form-control" placeholder="Digite o valor" required>
+                            <span asp-validation-for="Despesa.Valor" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.DataPagamento"></label>
+                            <input type="datetime" asp-for="Despesa.DataPagamento" id="dataPagamentoEdit" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.DataPagamentoEsperado"></label>
+                            <input type="datetime" asp-for="Despesa.DataPagamentoEsperado" id="dataPagamentoEsperadoEdit" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.TipoDespesa"></label>
+                            <select asp-for="Despesa.TipoDespesa" id="tipoDespesaEdit" class="form-control" required>
+                                <option value="" hidden selected>Selecionar</option>
+                                <option value="Sálario">Sálario</option>
+                                <option value="Presente">Presente</option>
+                                <option value="Prêmio">Prêmio</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Despesa.Conta"></label>
+                            <select asp-for="Despesa.ContaID" class="form-control select2" id="contaEdit" asp-items="ViewBag.ContaID" required>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="this.disabled = true; frmEdit.submit();" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*DELETAR*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Deletar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Deletar" id="frmDeletar">
+                    <input asp-for="IdDespesa" id="IdDespesa" type="hidden" />
+                    <h5 class="modal-title" id="myLargeModalLabel">
+                        Deseja realmente deletar esta despesa?
+                    </h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="this.disable = true; frmDeletar.submit();" type="button" class="btn btn-danger">Sim, Excluir</button>
+                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function editarDespesa(item) {
+        $('#Editar').modal('show');
+
+        $('#idEdit').val(item.ID);
+        $('#valorEdit').val(item.Valor);
+        $('#dataPagamentoEdit').val(item.DataPagamento);
+        $('#dataPagamentoEsperadoEdit').val(item.DataPagamentoEsperado);
+        $('#contaEdit').val(item.ContaID);
+        $('#tipoDespesaEdit').val(item.TipoDespesa);
+    };
+    function deletarDespesa(id) {
+        $('#Deletar').modal('show');
+
+        $('#IdDespesa').val(id);
+    };
+</script>

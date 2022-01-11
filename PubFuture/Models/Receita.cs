@@ -13,9 +13,11 @@ namespace PubFuture.Models
 
         [Required(ErrorMessage = "Data obrigatório.")]
         [Display(Name = "Data recebimento esperado")]
+        [DataType(DataType.Date)]
         public DateTime DataRecebimentoEsperado { get; set; }
 
         [Display(Name = "Data recebimento")]
+        [DataType(DataType.Date)]
         public DateTime DataRecebimento { get; set; }
 
         [Display(Name = "Descrição")]
@@ -26,7 +28,7 @@ namespace PubFuture.Models
         public string TipoReceita { get; set; }
 
 
-        public int IdConta { get; set; }
-        public Conta Conta { get; set; }
+        public int ContaID { get; set; }
+        public virtual Conta Conta { get; set; }
     }
 }

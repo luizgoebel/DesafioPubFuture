@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PubFuture.Data;
 
 namespace PubFuture.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20220110192305_NomeDBalteradoContaID")]
+    partial class NomeDBalteradoContaID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,7 @@ namespace PubFuture.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ContaID")
+                    b.Property<int?>("ContaID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataPagamento")
@@ -57,6 +59,9 @@ namespace PubFuture.Migrations
 
                     b.Property<DateTime>("DataPagamentoEsperado")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("IdConta")
+                        .HasColumnType("int");
 
                     b.Property<string>("TipoDespesa")
                         .IsRequired()
@@ -109,9 +114,7 @@ namespace PubFuture.Migrations
                 {
                     b.HasOne("PubFuture.Models.Conta", "Conta")
                         .WithMany()
-                        .HasForeignKey("ContaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContaID");
 
                     b.Navigation("Conta");
                 });

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PubFuture.Data;
 using PubFuture.Models;
@@ -18,13 +19,81 @@ namespace PubFuture.Pages.Despesas
         {
             _context = context;
         }
+        public double TotalDespesa { get; set; }
 
         [BindProperty]
         public Despesa Despesa { get; set; }
 
+        [BindProperty]
+        public int IdDespesa { get; set; }
+
+        [BindProperty]
         public List<Despesa> Despesas { get; set; }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
+        {
+            ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
+
+            double total = _context.Despesas.Sum(c => c.Valor);
+            TotalDespesa = total;
+
+            await CarregarPropriedades();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostCadastrarAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                ViewData["ContaID"] = new SelectList(_context.Despesas, "ID", "TipoDespesa");
+                await _context.Despesas.AddAsync(Despesa);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../Despesas/Index");
+            }
+
+            if (!DespesaExiste(Despesa.ID))
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostEditarAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Attach(Despesa).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../Despesas/Index");
+            }
+
+            if (!DespesaExiste(Despesa.ID))
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeletarAsync()
+        {
+
+            Despesa despesa = await _context.Despesas.FirstOrDefaultAsync(c => c.ID == IdDespesa);
+            if (despesa != null)
+            {
+                _context.Remove(despesa);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../Despesas/Index");
+            }
+
+            return Page();
+        }
+
+        private bool DespesaExiste(int id)
+        {
+            return _context.Despesas.Any(e => e.ID == id);
+        }
+
+        private async Task CarregarPropriedades()
         {
             Despesas = await _context.Despesas.ToListAsync();
         }

@@ -21,11 +21,12 @@ namespace PubFuture.Models
         [DataType(DataType.Date)]
         public DateTime DataPagamento { get; set; }
 
+        [Display(Name = "Tipo despesa")]
         [Required(ErrorMessage = "Tipo despesa obrigátório.")]
         public string TipoDespesa { get; set; }
 
 
-        public int IdConta { get; set; }
+        public int ContaID { get; set; }
         public Conta Conta { get; set; }
     }
 }

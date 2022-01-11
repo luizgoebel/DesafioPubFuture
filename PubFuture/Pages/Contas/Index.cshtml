@@ -57,16 +57,21 @@
                                     @item.InstituicaoFinanceira
                                 </td>
                                 <td>
-                                    <a asp-page="./Editar" asp-route-id="@item.ID" class="btn btn-primary"> <i class="fas fa-edit"></i> </a> |
-                                    <a asp-page="./Visualizar" asp-route-id="@item.ID" class="btn btn-info"> <i class="fas fa-search-plus"></i> </a> |
-                                    <a asp-page="./Deletar" asp-route-id="@item.ID" class="btn btn-danger"> <i class="fas fa-trash-alt"></i> </a> |
-                                    <a asp-page="./Operar" asp-route-id="@item.ID" class="btn btn-success"> <i class="fas fa-file-invoice-dollar"></i> </a>
+                                    <btn class="btn btn-primary" onclick='editarConta(@Html.Raw(JsonConvert.SerializeObject(item)))' style="cursor: pointer;">
+                                        <i class="fas fa-edit"></i>
+                                    </btn> |
+                                    <btn class="btn btn-danger" onclick='deletarConta(@item.ID)' style="cursor: pointer;">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </btn> |
+                                    <btn class="btn btn-success" onclick='transferencia(@item.ID)' style="cursor: pointer;">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </btn>
                                 </td>
                             </tr>
                         }
                         <tr>
                             <td class="text-center">Saldo Total</td>
-                            <td class="text-center">R$ 0,00</td>
+                            <td class="text-center">@Model.TotalContas.ToString("C")</td>
                         </tr>
                     </tbody>
                 </table>
@@ -75,3 +80,188 @@
         </div>
     </div>
 </body>
+
+@*CADASTRAR*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Cadastrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Cadastrar nova Conta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Cadastrar" id="frmCad">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Conta.Saldo"></label>
+                            <input asp-for="Conta.Saldo" class="form-control" placeholder="Digite o Saldo" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Conta.TipoConta"></label>
+                            <select asp-for="Conta.TipoConta" class="form-control" required>
+                                <option value="" hidden selected>Selecionar</option>
+                                <option value="Salário">Salário</option>
+                                <option value="Poupança">Poupança</option>
+                                <option value="Carteira">Carteira</option>
+                                <option value="Corrente">Corrente</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Conta.InstituicaoFinanceira"></label>
+                            <select asp-for="Conta.InstituicaoFinanceira" class="form-control" required>
+                                <option value="" hidden selected>Selecionar</option>
+                                <option value="Banco do Brasil">Banco do Brasil</option>
+                                <option value="Santander">Santander</option>
+                                <option value="Caixa">Caixa</option>
+                                <option value="Bradesco">Bradesco</option>
+                                <option value="Itau">Itau</option>
+                                <option value="Sicob">Sicob</option>
+                                <option value="Viacredi">Viacredi</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="this.disabled = true; frmCad.submit();" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*EDITAR*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Editar receita</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Editar" id="frmEdit">
+                    <input asp-for="Conta.ID" id="idEdit" class="form-control" readonly hidden>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Conta.Saldo"></label>
+                            <input asp-for="Conta.Saldo" id="saldoEdit" class="form-control" placeholder="Digite o Saldo" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Conta.TipoConta"></label>
+                            <select asp-for="Conta.TipoConta" id="tipoContaEdit" class="form-control" required>
+                                <option value="Salário">Salário</option>
+                                <option value="Poupança">Poupança</option>
+                                <option value="Carteira">Carteira</option>
+                                <option value="Corrente">Corrente</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Conta.InstituicaoFinanceira"></label>
+                            <select asp-for="Conta.InstituicaoFinanceira" id="instituicaoFinanceiraEdit" class="form-control" required>
+                                <option value="Banco do Brasil">Banco do Brasil</option>
+                                <option value="Santander">Santander</option>
+                                <option value="Caixa">Caixa</option>
+                                <option value="Bradesco">Bradesco</option>
+                                <option value="Itau">Itau</option>
+                                <option value="Sicob">Sicob</option>
+                                <option value="Viacredi">Viacredi</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="this.disabled = true; frmEdit.submit();" class="btn btn-primary">Salvar</button>
+                <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*DELETAR*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Deletar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Deletar" id="frmDeletar">
+                    <input asp-for="IdConta" id="IdConta" type="hidden" />
+                    <h5 class="modal-title" id="myLargeModalLabel">
+                        Deseja realmente deletar esta conta?
+                    </h5>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="this.disable = true; frmDeletar.submit();" type="button" class="btn btn-danger">Sim, Excluir</button>
+                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*TRANSFERENCIA*@
+<div class="modal animated fadeInUp custo-fadeInUp show" id="Transferencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Nova transferência</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Transferir" id="frmTransf">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Conta Destino</label>
+                            <select asp-for="Transferencia.ContaID" class="form-control select2" asp-items="ViewBag.ContaID" required>
+                                <option selected hidden>Selecionar</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Transferencia.Valor"></label>
+                            <input asp-for="Transferencia.Valor" class="form-control" placeholder="Digite o valor">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="this.disabled = true; frmTransf.submit();" class="btn btn-primary">Transferir</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function deletarConta(id) {
+        $('#Deletar').modal('show');
+
+        $('#IdConta').val(id);
+    };
+
+    function editarConta(item) {
+        $('#Editar').modal('show');
+
+        $('#idEdit').val(item.ID);
+        $('#saldoEdit').val(item.Saldo);
+        $('#tipoContaEdit').val(item.TipoConta);
+        $('#instituicaoFinanceiraEdit').val(item.InstituicaoFinanceira);
+    };
+
+    function transferencia(item) {
+        $('#Transferencia').modal('show');
+
+        $('#idEdit').val(item.ID);
+
+    };
+
+
+</script>

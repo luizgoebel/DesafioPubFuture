@@ -10,8 +10,10 @@ namespace PubFuture.Models
     {
         [Required(ErrorMessage = "Saldo obrigatório.")]
         public double Saldo { get; set; }
+        [Display(Name ="Tipo conta")]
         [Required(ErrorMessage = "Tipo conta obrigatório.")]
         public string TipoConta { get; set; }
+        [Display(Name = "Instituição financeira")]
         [Required(ErrorMessage = "Instituição financeira obrigatório.")]
         public string InstituicaoFinanceira { get; set; }
     }

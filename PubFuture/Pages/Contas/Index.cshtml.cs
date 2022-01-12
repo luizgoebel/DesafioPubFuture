@@ -47,15 +47,15 @@ namespace PubFuture.Pages.Contas
         {
             if (ModelState.IsValid)
             {
+                if (ContaExiste(Conta.TipoConta))
+                {
+                    return RedirectToPage("../Error");
+                }
                 await _context.Contas.AddAsync(Conta);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Contas/Index");
             }
 
-            if (!ContaExiste(Conta.ID))
-            {
-                return NotFound();
-            }
             return Page();
         }
 
@@ -63,15 +63,16 @@ namespace PubFuture.Pages.Contas
         {
             if (ModelState.IsValid)
             {
+                if (ContaExiste(Conta.TipoConta))
+                {
+                    return RedirectToPage("../Error");
+                }
                 _context.Attach(Conta).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Contas/Index");
             }
 
-            if (!ContaExiste(Conta.ID))
-            {
-                return NotFound();
-            }
+
             return Page();
         }
 
@@ -90,7 +91,7 @@ namespace PubFuture.Pages.Contas
 
         public async Task<IActionResult> OnPostTransferirAsync()
         {
-            if (Transferencia.ContaDestinoID > 0 && 
+            if (Transferencia.ContaDestinoID > 0 &&
                 Transferencia.ContaOrigemID > 0)//Valida se as contas estão preenchidas.
             {
                 Conta contaOrigem = await _context.Contas.FirstOrDefaultAsync(c => c.ID == Transferencia.ContaOrigemID);
@@ -112,9 +113,9 @@ namespace PubFuture.Pages.Contas
             return Page();
         }
 
-        private bool ContaExiste(int id)
+        private bool ContaExiste(string tipoConta)
         {
-            return _context.Contas.Any(e => e.ID == id);
+            return _context.Contas.Any(e => e.TipoConta == tipoConta);
         }
 
         private async Task CarregarPropriedades()

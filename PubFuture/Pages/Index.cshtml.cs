@@ -31,12 +31,10 @@ namespace PubFuture.Pages
 
         public double TotalReceita { get; set; }
         public double TotalDespesa { get; set; }
-        public double TotalConta { get; set; }
-        public double AcumuladoTotal { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
 
             double totalRecei = _context.Receitas.Sum(c => c.Valor);
             TotalReceita = totalRecei;
@@ -44,13 +42,6 @@ namespace PubFuture.Pages
             double totalDesp = _context.Despesas.Sum(c => c.Valor);
             TotalDespesa = totalDesp;
 
-            double totalCont = _context.Contas.Sum(c => c.Saldo);
-            TotalConta = totalCont;
-
-            var acumuladoTotal = (totalRecei + totalDesp) + totalCont;
-            AcumuladoTotal = acumuladoTotal;
-
-            //await CarregarPropriedades();
             return Page();
         }
     }

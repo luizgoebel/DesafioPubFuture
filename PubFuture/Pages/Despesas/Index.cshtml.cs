@@ -46,15 +46,16 @@ namespace PubFuture.Pages.Despesas
             if (ModelState.IsValid)
             {
                 ViewData["ContaID"] = new SelectList(_context.Despesas, "ID", "TipoDespesa");
+                //if (DespesaExiste(Despesa.TipoDespesa))
+                //{
+                //    return RedirectToPage("../Erros/DespesaExiste");
+                //}
+
                 await _context.Despesas.AddAsync(Despesa);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Despesas/Index");
             }
 
-            if (!DespesaExiste(Despesa.ID))
-            {
-                return NotFound();
-            }
             return Page();
         }
 
@@ -62,15 +63,15 @@ namespace PubFuture.Pages.Despesas
         {
             if (ModelState.IsValid)
             {
+                //if (DespesaExiste(Despesa.TipoDespesa))
+                //{
+                //    return RedirectToPage("../Erros/DespesaExiste");
+                //}
                 _context.Attach(Despesa).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Despesas/Index");
             }
 
-            if (!DespesaExiste(Despesa.ID))
-            {
-                return NotFound();
-            }
             return Page();
         }
 
@@ -88,10 +89,10 @@ namespace PubFuture.Pages.Despesas
             return Page();
         }
 
-        private bool DespesaExiste(int id)
-        {
-            return _context.Despesas.Any(e => e.ID == id);
-        }
+        //private bool DespesaExiste(string tipoDespesa)
+        //{
+        //    return _context.Despesas.Any(e => e.TipoDespesa == tipoDespesa);
+        //}
 
         private async Task CarregarPropriedades()
         {

@@ -220,7 +220,7 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label>Conta Destino</label>
-                            <select asp-for="Transferencia.ContaID" class="form-control select2" asp-items="ViewBag.ContaID" required>
+                            <select asp-for="Transferencia.ContaDestinoID" class="form-control select2" asp-items="ViewBag.ContaID" required>
                                 <option selected hidden>Selecionar</option>
                             </select>
                         </div>
@@ -229,6 +229,7 @@
                             <input asp-for="Transferencia.Valor" class="form-control" placeholder="Digite o valor">
                         </div>
                     </div>
+                    <input type="hidden" id="idContaOrigemTransferencia" asp-for="Transferencia.ContaOrigemID"/>
                 </form>
             </div>
             <div class="modal-footer">
@@ -256,11 +257,10 @@
         $('#instituicaoFinanceiraEdit').val(item.InstituicaoFinanceira);
     };
 
-    function transferencia(item) {
+    function transferencia(idOrigem) {
+        $('#idContaOrigemTransferencia').val(idOrigem);
+
         $('#Transferencia').modal('show');
-
-        $('#idEdit').val(item.ID);
-
     };
 
 

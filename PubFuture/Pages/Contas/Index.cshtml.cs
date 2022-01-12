@@ -42,6 +42,7 @@ namespace PubFuture.Pages.Contas
             await CarregarPropriedades();
             return Page();
         }
+
         public async Task<IActionResult> OnPostCadastrarAsync()
         {
             if (ModelState.IsValid)
@@ -76,7 +77,6 @@ namespace PubFuture.Pages.Contas
 
         public async Task<IActionResult> OnPostDeletarAsync()
         {
-
             Conta conta = await _context.Contas.FirstOrDefaultAsync(c => c.ID == IdConta);
             if (conta != null)
             {
@@ -87,26 +87,36 @@ namespace PubFuture.Pages.Contas
 
             return Page();
         }
+
         public async Task<IActionResult> OnPostTransferirAsync()
         {
-
-            Conta conta = await _context.Contas.FirstOrDefaultAsync(c => c.ID == IdConta);
-            if (conta != null)
+            if (Transferencia.ContaDestinoID > 0 && 
+                Transferencia.ContaOrigemID > 0)//Valida se as contas estão preenchidas.
             {
-                _context.Remove(conta);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Contas/Index");
+                Conta contaOrigem = await _context.Contas.FirstOrDefaultAsync(c => c.ID == Transferencia.ContaOrigemID);
+                if (contaOrigem != null && contaOrigem.Saldo >= Transferencia.Valor)//Valida se existe a conta de origem e se possui saldo.
+                {
+                    Conta contaDestino = await _context.Contas.FirstOrDefaultAsync(c => c.ID == Transferencia.ContaDestinoID);
+                    if (contaDestino != null)//Valida se existe a conta de destino.
+                    {
+                        contaOrigem.Saldo -= Transferencia.Valor;
+                        contaDestino.Saldo += Transferencia.Valor; //Transfere o saldo de uma conta pra outra.
+
+                        _context.Update(contaOrigem);
+                        _context.Update(contaDestino);
+                        await _context.SaveChangesAsync();//Atualiza as duas contas.
+                    }
+                }
             }
 
             return Page();
         }
-
-
 
         private bool ContaExiste(int id)
         {
             return _context.Contas.Any(e => e.ID == id);
         }
+
         private async Task CarregarPropriedades()
         {
             Contas = await _context.Contas.ToListAsync();

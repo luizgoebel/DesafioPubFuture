@@ -7,7 +7,8 @@ namespace PubFuture.Models
 {
     public class Transferencia : BaseModel
     {
-        public Conta ContaID { get; set; }
+        public Conta Conta { get; set; }
+        public int ContaID { get; set; }
         public double Valor { get; set; }
     }
 }

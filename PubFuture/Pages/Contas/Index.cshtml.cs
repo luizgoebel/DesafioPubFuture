@@ -22,6 +22,8 @@ namespace PubFuture.Pages.Contas
 
         [BindProperty]
         public Conta Conta { get; set; }
+
+        [BindProperty]
         public Transferencia Transferencia { get; set; }
         public double TotalContas { get; set; }
 
@@ -85,6 +87,20 @@ namespace PubFuture.Pages.Contas
 
             return Page();
         }
+        public async Task<IActionResult> OnPostTransferirAsync()
+        {
+
+            Conta conta = await _context.Contas.FirstOrDefaultAsync(c => c.ID == IdConta);
+            if (conta != null)
+            {
+                _context.Remove(conta);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("../Contas/Index");
+            }
+
+            return Page();
+        }
+
 
 
         private bool ContaExiste(int id)

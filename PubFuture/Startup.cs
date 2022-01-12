@@ -28,7 +28,7 @@ namespace PubFuture
 
             services.AddRazorPages();
             services.AddDbContext<WebContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<BaseService>();
+            //services.AddScoped<BaseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

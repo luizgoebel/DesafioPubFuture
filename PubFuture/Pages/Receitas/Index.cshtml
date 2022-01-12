@@ -11,16 +11,19 @@
 <body>
     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
         <div class="widget-content widget-content-area br-6">
-
             <div class="container">
-                <h3>
-                    Receitas
-                    <button class="btn btn-primary mb-2" style="color: #fff !important;background-color: #0078bc !important;border-color: #43c7ee;box-shadow: 0 10px 20px -10px #0078bc;position: relative;border-radius: 26px;float: right;" data-toggle="modal" data-target="#Cadastrar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                            <path d="M10.6667 0H1.33333C0.593333 0 0 0.6 0 1.33333V10.6667C0 11.4 0.593333 12 1.33333 12H10.6667C11.4 12 12 11.4 12 10.6667V1.33333C12 0.6 11.4 0 10.6667 0ZM10.6667 10.6667H1.33333V1.33333H10.6667V10.6667ZM5.33333 9.33333H6.66667V6.66667H9.33333V5.33333H6.66667V2.66667H5.33333V5.33333H2.66667V6.66667H5.33333V9.33333Z" fill="white"></path>
-                        </svg> &nbsp; Nova Receita
-                    </button>
-                </h3>
+                <div id="nav">
+                    <form class="form-inline">
+                        <div id="consulta">
+                            <input type="text" class="w-100 form-control product-search br-30 mr-sm-2" name="consulta" id="txt_consulta" placeholder="Buscar ..." onkeyup="myFunction()">
+                        </div>
+                    </form>
+                </div>
+                <button class="btn btn-primary mb-2" style="color: #fff !important;background-color: #0078bc !important;border-color: #43c7ee;box-shadow: 0 10px 20px -10px #0078bc;position: relative;border-radius: 26px;float: right;" data-toggle="modal" data-target="#Cadastrar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M10.6667 0H1.33333C0.593333 0 0 0.6 0 1.33333V10.6667C0 11.4 0.593333 12 1.33333 12H10.6667C11.4 12 12 11.4 12 10.6667V1.33333C12 0.6 11.4 0 10.6667 0ZM10.6667 10.6667H1.33333V1.33333H10.6667V10.6667ZM5.33333 9.33333H6.66667V6.66667H9.33333V5.33333H6.66667V2.66667H5.33333V5.33333H2.66667V6.66667H5.33333V9.33333Z" fill="white"></path>
+                    </svg> &nbsp; Nova Receita
+                </button>
             </div>
 
             <div class="table-responsive mb-4 mt-4">
@@ -253,5 +256,27 @@
         $('#tipoReceitaEdit').val(item.TipoReceita);
     };
 
+    function myFunction() {
+        var input, filter, table, tr, td, cell, i, j;
+        input = document.getElementById("txt_consulta");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("default-ordering");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = "none";
+            td = tr[i].getElementsByTagName("td");
+
+            for (var j = 0; j < td.length; j++) {
+                cell = tr[i].getElementsByTagName("td")[j];
+                if (cell) {
+                    if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
 </script>

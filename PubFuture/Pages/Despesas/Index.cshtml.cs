@@ -23,6 +23,8 @@ namespace PubFuture.Pages.Despesas
 
         [BindProperty]
         public Despesa Despesa { get; set; }
+        [BindProperty]
+        public Conta Conta { get; set; }
 
         [BindProperty]
         public int IdDespesa { get; set; }
@@ -46,11 +48,6 @@ namespace PubFuture.Pages.Despesas
             if (ModelState.IsValid)
             {
                 ViewData["ContaID"] = new SelectList(_context.Despesas, "ID", "TipoDespesa");
-                //if (DespesaExiste(Despesa.TipoDespesa))
-                //{
-                //    return RedirectToPage("../Erros/DespesaExiste");
-                //}
-
                 await _context.Despesas.AddAsync(Despesa);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Despesas/Index");
@@ -63,10 +60,6 @@ namespace PubFuture.Pages.Despesas
         {
             if (ModelState.IsValid)
             {
-                //if (DespesaExiste(Despesa.TipoDespesa))
-                //{
-                //    return RedirectToPage("../Erros/DespesaExiste");
-                //}
                 _context.Attach(Despesa).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Despesas/Index");
@@ -89,10 +82,16 @@ namespace PubFuture.Pages.Despesas
             return Page();
         }
 
-        //private bool DespesaExiste(string tipoDespesa)
-        //{
-        //    return _context.Despesas.Any(e => e.TipoDespesa == tipoDespesa);
-        //}
+        public void DebitarDespesaDoSaldo()
+        {
+            if (Despesa.Valor < Conta.Saldo && Despesa.Conta.TipoConta == Conta.TipoConta)
+            {
+                Despesa.Valor -= Conta.Saldo;
+                _context.Update(Despesa);
+                _context.Update(Conta);
+            }
+        }
+
 
         private async Task CarregarPropriedades()
         {

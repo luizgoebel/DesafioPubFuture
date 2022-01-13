@@ -106,10 +106,10 @@ namespace PubFuture.Pages.Contas
                         _context.Update(contaOrigem);
                         _context.Update(contaDestino);
                         await _context.SaveChangesAsync();//Atualiza as duas contas.
+                        return RedirectToPage("../Contas/Index");
                     }
                 }
             }
-
             return Page();
         }
 

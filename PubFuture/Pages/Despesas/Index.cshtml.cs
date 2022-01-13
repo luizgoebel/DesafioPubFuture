@@ -23,15 +23,14 @@ namespace PubFuture.Pages.Despesas
 
         [BindProperty]
         public Despesa Despesa { get; set; }
-        [BindProperty]
-        public Conta Conta { get; set; }
 
+        [BindProperty]
+        public int IdConta { get; set; }
         [BindProperty]
         public int IdDespesa { get; set; }
 
         [BindProperty]
         public List<Despesa> Despesas { get; set; }
-
         public async Task<IActionResult> OnGet()
         {
             ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
@@ -47,10 +46,14 @@ namespace PubFuture.Pages.Despesas
         {
             if (ModelState.IsValid)
             {
-                ViewData["ContaID"] = new SelectList(_context.Despesas, "ID", "TipoDespesa");
-                await _context.Despesas.AddAsync(Despesa);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Despesas/Index");
+                if (DebitarDoSaldo().IsCompletedSuccessfully)
+                {
+                    ViewData["ContaID"] = new SelectList(_context.Despesas, "ID", "TipoDespesa");
+                    await _context.Despesas.AddAsync(Despesa);
+                    //DebitarDoSaldo();
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../Despesas/Index");
+                }
             }
 
             return Page();
@@ -82,16 +85,21 @@ namespace PubFuture.Pages.Despesas
             return Page();
         }
 
-        public void DebitarDespesaDoSaldo()
+        public async Task DebitarDoSaldo()
         {
-            if (Despesa.Valor < Conta.Saldo && Despesa.Conta.TipoConta == Conta.TipoConta)
+            Conta contaOrigem = _context.Contas.FirstOrDefault(c => c.ID == Despesa.ContaID);
+            if (Despesa.Valor > contaOrigem.Saldo || contaOrigem.Saldo <= 0)
             {
-                Despesa.Valor -= Conta.Saldo;
-                _context.Update(Despesa);
-                _context.Update(Conta);
+                RedirectToPage("errorSaldo");
+            }
+            if (Despesa.Valor <= contaOrigem.Saldo)
+            {
+                contaOrigem.Saldo -= Despesa.Valor;
+
+                _context.Attach(contaOrigem).State = EntityState.Modified;
+                _context.Update(contaOrigem);
             }
         }
-
 
         private async Task CarregarPropriedades()
         {

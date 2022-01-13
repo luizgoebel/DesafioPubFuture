@@ -27,6 +27,6 @@ namespace PubFuture.Models
 
 
         public int ContaID { get; set; }
-        public Conta Conta { get; set; }
+        public virtual Conta Conta { get; set; }
     }
 }

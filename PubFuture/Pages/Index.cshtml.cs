@@ -52,7 +52,7 @@ namespace PubFuture.Pages
 
         public void GraficoReceita()
         {
-            //Despesas
+            //Receitas
             var listaReceita = (from r in _context.Receitas
                                 group r by new { r.TipoReceita }
                      into g

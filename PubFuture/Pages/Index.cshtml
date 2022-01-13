@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>
     <style>
         #grafico {
-            width: 60%;
+            width: 75%;
             /*height: 50%;*/
         }
     </style>
@@ -131,12 +131,48 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px; margin-top: 0px !important; width: 400px; height: 400px;">
+
+
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px;margin-top:0px !important;">
+                        <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
+                            <div class="widget-header ">
+                                <h6>Receitas</h6>
+                                <div class="" id="grafico">
+                                    <canvas id="myChart2" width="400" height="400" style="margin-left: 80px;"></canvas>
+                                    <script>
+        var ctex = document.getElementById('myChart2').getContext('2d');
+        var myChart = new Chart(ctex, {
+            type: 'pie',
+            data: {
+                labels: [@Html.Raw(ViewBag.labelss)],
+                datasets: [{
+                    backgroundColor:
+                        [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+                    borderColor: '#fff',
+                    data: [@Html.Raw(ViewBag.valoress)],
+                }]
+            },
+            options: {}
+        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px; margin-top: 0px !important;">
                         <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
                             <div class="widget-header ">
                                 <h6>Despesas</h6>
                                 <div class="" id="grafico">
-                                    <canvas id="myChart" width="100" height="100"></canvas>
+                                    <canvas id="myChart" width="400" height="400" style="margin-left: 80px;"></canvas>
                                     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -168,42 +204,9 @@
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px;margin-top:0px !important;">
                         <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
                             <div class="widget-header ">
-                                <h6>Receitas</h6>
-                                <div class="" id="grafico">
-                                    <canvas id="myChart2" width="400" height="400"></canvas>
-                                    <script>
-        var ctex = document.getElementById('myChart2').getContext('2d');
-        var myChart = new Chart(ctex, {
-            type: 'pie',
-            data: {
-                labels: [@Html.Raw(ViewBag.labelss)],
-                datasets: [{
-                    backgroundColor:
-                        [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-                    borderColor: '#fff',
-                    data: [@Html.Raw(ViewBag.valoress)],
-                }]
-            },
-            options: {}
-        });
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="padding-bottom: 10px;margin-top:0px !important;">
-                        <div class="widget-content widget-content-area br-6 statbox widget box box-shadow">
-                            <div class="widget-header ">
                                 <h6>Contas</h6>
                                 <div class="" id="grafico">
-                                    <canvas id="myChart3" width="400" height="400"></canvas>
+                                    <canvas id="myChart3" width="400" height="400" style="margin-left: 80px;"></canvas>
                                     <script>
                                         var ctexx = document.getElementById('myChart3').getContext('2d');
         var myChart = new Chart(ctexx, {

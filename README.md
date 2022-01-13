@@ -3,14 +3,16 @@ Desafio de programação PubFuture Proway
 
 Orientações para rodar aplicação:
 
-Projeto criado utilizando visual studio comminity 2019 -->
+Projeto criado utilizando visual studio 2019 -->
 
-Copie o link do projeto (github) vá até a naveção superior do visual studio na opção GIT -> clonar repositório -> cole o link e de um diretório.
+Copie o link github do projeto vá até a navegação superior do visual studio na opção GIT -> clonar repositório -> cole o link do github e indique o diretório.
+
+Em seguida...
 
 --> No projeto vá até arquivo appsettings.json, altere a string de conexão para seu banco de dados conforme exemplo abaixo, geralmente mudar o data Source.
     "DefaultConnection": "Integrated Security=SSPI; Persist Security Info=False; Initial Catalog=PubFutureDB; Data Source=DESKTOP-M0JNEVB"
     
---> em seguida novamente na navegação superior Ferramentas -> Gerenciador de pacostes do NuGet -> Console do genrenciador de pacotes
+--> em seguida novamente na navegação superior em Ferramentas -> Gerenciador de pacostes do NuGet -> Console do gerenciador de pacotes
 
 --> abrirá um prompt gerenciador, você deverá  digitar:
 PM> update-database

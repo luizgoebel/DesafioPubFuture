@@ -48,10 +48,13 @@ namespace PubFuture.Pages.Receitas
         {
             if (ModelState.IsValid)
             {
-                ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
-                await _context.Receitas.AddAsync(Receita);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("../Receitas/Index");
+                if (CreditarAoSaldo().IsCompletedSuccessfully)
+                {
+                    ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
+                    await _context.Receitas.AddAsync(Receita);
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("../Receitas/Index");
+                }
             }
 
             if (!ReceitaExiste(Receita.ID))
@@ -91,6 +94,17 @@ namespace PubFuture.Pages.Receitas
             return Page();
         }
 
+        public async Task CreditarAoSaldo()
+        {
+            Conta contaOrigem = _context.Contas.FirstOrDefault(c => c.ID == Receita.ContaID);
+            if (Receita.Valor > 0)
+            {
+                contaOrigem.Saldo += Receita.Valor;
+
+                _context.Attach(contaOrigem).State = EntityState.Modified;
+                _context.Update(contaOrigem);
+            }
+        }
         private bool ReceitaExiste(int id)
         {
             return _context.Receitas.Any(e => e.ID == id);

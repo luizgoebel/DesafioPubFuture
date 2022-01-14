@@ -18,3 +18,10 @@ Em seguida...
 PM> update-database
 
 Este comando irá reconhecer sua string de conexão com o banco de dados(SQLSERVER) e irá criar sua base automaticamente, após este procedimento, você poderá executar a aplicação.
+
+
+
+
+**Há um arquivo da base caso seja mais fácil de restaurar arquivo: PubFutureDB.bak**
+
+--> Para isso é necessário restaurar esse arquivo em sua instância do Sql Server e alterar somente seu Data Source na string de conexão que esta situadaa em appjson no projeto.

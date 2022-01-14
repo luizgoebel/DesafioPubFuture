@@ -103,7 +103,8 @@ namespace PubFuture.Pages.Despesas
 
         private async Task CarregarPropriedades()
         {
-            Despesas = await _context.Despesas.ToListAsync();
+            Despesas = await _context.Despesas.Include(u => u.Conta).ToListAsync();
+            ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
         }
     }
 }

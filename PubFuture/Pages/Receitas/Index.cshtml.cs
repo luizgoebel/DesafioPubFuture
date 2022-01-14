@@ -26,7 +26,7 @@ namespace PubFuture.Pages.Receitas
         public Receita Receita { get; set; }
         public double TotalReceita { get; set; }
 
-        public List<Receita> Receitas { get; set; }
+        public IList<Receita> Receitas { get; set; }
 
         [BindProperty]
         public int IdReceita { get; set; }
@@ -35,7 +35,6 @@ namespace PubFuture.Pages.Receitas
         public async Task<IActionResult> OnGetAsync()
         {
             ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
-
             double total = _context.Receitas.Sum(c => c.Valor);
             TotalReceita = total;
 
@@ -111,7 +110,8 @@ namespace PubFuture.Pages.Receitas
         }
         private async Task CarregarPropriedades()
         {
-            Receitas = await _context.Receitas.ToListAsync();
+            Receitas = await _context.Receitas.Include(u => u.Conta).ToListAsync();
+            ViewData["ContaID"] = new SelectList(_context.Contas, "ID", "TipoConta");
         }
     }
 }

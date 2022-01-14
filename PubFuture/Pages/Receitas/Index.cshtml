@@ -74,7 +74,7 @@
                                     @item.Descricao
                                 </td>
                                 <td>
-                                    @(item.ContaID)
+                                    @(item.Conta?.TipoConta ?? string.Empty)
                                 </td>
                                 <td>
                                     @item.TipoReceita
